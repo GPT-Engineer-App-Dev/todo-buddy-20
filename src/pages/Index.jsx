@@ -1,7 +1,7 @@
-// Complete the Index page component for a basic Todo application
 import { useState, useRef } from "react";
 import { Box, Input, Button, List, ListItem, IconButton, Text, useToast } from "@chakra-ui/react";
 import { FaPlus, FaTrash, FaCheck } from "react-icons/fa";
+import Navbar from "../components/Navbar";
 
 const Index = () => {
   const [tasks, setTasks] = useState([]);
@@ -37,6 +37,7 @@ const Index = () => {
 
   return (
     <Box p={5} display="flex" flexDirection="column" minHeight="100vh">
+      <Navbar />
       <Box display="flex" mb={4}>
         <Input placeholder="Add a new task" value={input} onChange={(e) => setInput(e.target.value)} onKeyPress={(e) => e.key === "Enter" && handleAddTask()} />
         <Button leftIcon={<FaPlus />} ml={2} onClick={handleAddTask} colorScheme="blue">
