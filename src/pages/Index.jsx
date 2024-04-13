@@ -6,22 +6,7 @@ import { FaPlus, FaTrash, FaCheck } from "react-icons/fa";
 const Index = () => {
   const [tasks, setTasks] = useState([]);
   const [input, setInput] = useState("");
-  const [images, setImages] = useState([]);
-  const fileInputRef = useRef(null);
   const toast = useToast();
-
-  const handleFileChange = (e) => {
-    const files = e.target.files;
-    const readers = [];
-    Array.from(files).forEach((file) => {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setImages((prevImages) => [...prevImages, e.target.result]);
-      };
-      readers.push(reader);
-      reader.readAsDataURL(file);
-    });
-  };
 
   const handleAddTask = () => {
     if (input.trim() === "") {
@@ -58,17 +43,7 @@ const Index = () => {
           Add
         </Button>
       </Box>
-      <Button onClick={() => fileInputRef.current && fileInputRef.current.click()} colorScheme="blue">
-        Upload Image
-      </Button>
-      <Input ref={fileInputRef} type="file" accept="image/*" p={1} onChange={handleFileChange} multiple cursor="pointer" style={{ display: "none" }} />
-      <Box display="flex" flexWrap="wrap" mt={4}>
-        {images.map((image, index) => (
-          <Box key={index} p={2} boxShadow="md">
-            <img src={image} alt={`uploaded-img-${index}`} style={{ width: "100px", height: "100px", objectFit: "cover" }} />
-          </Box>
-        ))}
-      </Box>
+
       <List spacing={3}>
         {tasks.map((task) => (
           <ListItem key={task.id} display="flex" alignItems="center" justifyContent="space-between" p={2} boxShadow="md">
