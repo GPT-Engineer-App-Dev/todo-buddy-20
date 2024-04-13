@@ -36,7 +36,7 @@ const Index = () => {
   };
 
   return (
-    <Box p={5}>
+    <Box p={5} display="flex" flexDirection="column" minHeight="100vh">
       <Box display="flex" mb={4}>
         <Input placeholder="Add a new task" value={input} onChange={(e) => setInput(e.target.value)} onKeyPress={(e) => e.key === "Enter" && handleAddTask()} />
         <Button leftIcon={<FaPlus />} ml={2} onClick={handleAddTask} colorScheme="blue">
@@ -44,7 +44,7 @@ const Index = () => {
         </Button>
       </Box>
 
-      <List spacing={3}>
+      <List spacing={3} flex="1">
         {tasks.map((task) => (
           <ListItem key={task.id} display="flex" alignItems="center" justifyContent="space-between" p={2} boxShadow="md">
             <Text as={task.isCompleted ? "s" : ""} fontSize="lg">
@@ -57,11 +57,11 @@ const Index = () => {
           </ListItem>
         ))}
       </List>
-    <Box mt={10} p={4} bg="gray.100" textAlign="center">
-      <Text>© 2023 My Todo App</Text>
+      <Box mt={10} p={4} bg="gray.100" textAlign="center">
+        <Text>© 2023 My Todo App</Text>
+      </Box>
     </Box>
-  </Box>
-);
+  );
 };
 
 export default Index;
