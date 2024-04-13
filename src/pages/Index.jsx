@@ -57,8 +57,11 @@ const Index = () => {
           </ListItem>
         ))}
       </List>
+    <Box mt={10} p={4} bg="gray.100" textAlign="center">
+      <Text>© 2023 My Todo App</Text>
     </Box>
-  );
+  </Box>
+);
 };
 
 export default Index;
