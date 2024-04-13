@@ -1,5 +1,5 @@
 // Complete the Index page component for a basic Todo application
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Box, Input, Button, List, ListItem, IconButton, Text, useToast } from "@chakra-ui/react";
 import { FaPlus, FaTrash, FaCheck } from "react-icons/fa";
 
@@ -7,7 +7,21 @@ const Index = () => {
   const [tasks, setTasks] = useState([]);
   const [input, setInput] = useState("");
   const [images, setImages] = useState([]);
+  const fileInputRef = useRef(null);
   const toast = useToast();
+
+  const handleFileChange = (e) => {
+    const files = e.target.files;
+    const readers = [];
+    Array.from(files).forEach((file) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setImages((prevImages) => [...prevImages, e.target.result]);
+      };
+      readers.push(reader);
+      reader.readAsDataURL(file);
+    });
+  };
 
   const handleAddTask = () => {
     if (input.trim() === "") {
@@ -44,26 +58,10 @@ const Index = () => {
           Add
         </Button>
       </Box>
-      <Input
-        as="input"
-        type="file"
-        accept="image/*"
-        p={1}
-        onChange={(e) => {
-          const files = e.target.files;
-          const readers = [];
-          Array.from(files).forEach((file) => {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-              setImages((prevImages) => [...prevImages, e.target.result]);
-            };
-            readers.push(reader);
-            reader.readAsDataURL(file);
-          });
-        }}
-        multiple
-        cursor="pointer"
-      />
+      <Button onClick={() => fileInputRef.current.click()} colorScheme="blue">
+        Upload Image
+      </Button>
+      <Input ref={fileInputRef} type="file" accept="image/*" p={1} onChange={handleFileChange} multiple cursor="pointer" hidden />
       <Box display="flex" flexWrap="wrap" mt={4}>
         {images.map((image, index) => (
           <Box key={index} p={2} boxShadow="md">
