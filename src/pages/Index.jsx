@@ -58,10 +58,10 @@ const Index = () => {
           Add
         </Button>
       </Box>
-      <Button onClick={() => fileInputRef.current.click()} colorScheme="blue">
+      <Button onClick={() => fileInputRef.current && fileInputRef.current.click()} colorScheme="blue">
         Upload Image
       </Button>
-      <Input ref={fileInputRef} type="file" accept="image/*" p={1} onChange={handleFileChange} multiple cursor="pointer" hidden />
+      <Input ref={fileInputRef} type="file" accept="image/*" p={1} onChange={handleFileChange} multiple cursor="pointer" style={{ display: "none" }} />
       <Box display="flex" flexWrap="wrap" mt={4}>
         {images.map((image, index) => (
           <Box key={index} p={2} boxShadow="md">
