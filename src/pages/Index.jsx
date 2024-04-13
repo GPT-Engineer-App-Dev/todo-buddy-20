@@ -44,18 +44,25 @@ const Index = () => {
           Add
         </Button>
       </Box>
-      <input
+      <Input
+        as="input"
         type="file"
         accept="image/*"
+        p={1}
         onChange={(e) => {
-          const file = e.target.files[0];
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            setImages([...images, e.target.result]);
-          };
-          reader.readAsDataURL(file);
+          const files = e.target.files;
+          const readers = [];
+          Array.from(files).forEach((file) => {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+              setImages((prevImages) => [...prevImages, e.target.result]);
+            };
+            readers.push(reader);
+            reader.readAsDataURL(file);
+          });
         }}
         multiple
+        cursor="pointer"
       />
       <Box display="flex" flexWrap="wrap" mt={4}>
         {images.map((image, index) => (
