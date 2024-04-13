@@ -6,6 +6,7 @@ import { FaPlus, FaTrash, FaCheck } from "react-icons/fa";
 const Index = () => {
   const [tasks, setTasks] = useState([]);
   const [input, setInput] = useState("");
+  const [images, setImages] = useState([]);
   const toast = useToast();
 
   const handleAddTask = () => {
@@ -42,6 +43,26 @@ const Index = () => {
         <Button leftIcon={<FaPlus />} ml={2} onClick={handleAddTask} colorScheme="blue">
           Add
         </Button>
+      </Box>
+      <input
+        type="file"
+        accept="image/*"
+        onChange={(e) => {
+          const file = e.target.files[0];
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            setImages([...images, e.target.result]);
+          };
+          reader.readAsDataURL(file);
+        }}
+        multiple
+      />
+      <Box display="flex" flexWrap="wrap" mt={4}>
+        {images.map((image, index) => (
+          <Box key={index} p={2} boxShadow="md">
+            <img src={image} alt={`uploaded-img-${index}`} style={{ width: "100px", height: "100px", objectFit: "cover" }} />
+          </Box>
+        ))}
       </Box>
       <List spacing={3}>
         {tasks.map((task) => (
